@@ -1,4 +1,4 @@
-# env-doctor
+# @metamarkets/env-doctor
 
 [![CI](https://github.com/emoubarak/env-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/emoubarak/env-doctor/actions/workflows/ci.yml)
 
@@ -11,7 +11,7 @@ A CLI tool to validate environment variables via a `.env.schema` file.
 ## Installation
 
 ```bash
-npm install -g @emoubarak/env-doctor
+npm install -g @metamarkets/env-doctor
 ```
 
 ## Usage
