@@ -1,6 +1,6 @@
 # env-doctor
 
-![CI](https://github.com/username/env-doctor/workflows/CI/badge.svg)
+[![CI](https://github.com/emoubarak/env-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/emoubarak/env-doctor/actions/workflows/ci.yml)
 
 A CLI tool to validate environment variables via a `.env.schema` file.
 
