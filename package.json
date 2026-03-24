@@ -1,5 +1,5 @@
 {
-  "name": "env-doctor",
+  "name": "@emoubarak/env-doctor",
   "version": "1.0.0",
   "description": "CLI tool to validate environment variables via .env.schema file",
   "main": "dist/index.js",

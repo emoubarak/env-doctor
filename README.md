@@ -11,7 +11,7 @@ A CLI tool to validate environment variables via a `.env.schema` file.
 ## Installation
 
 ```bash
-npm install -g env-doctor
+npm install -g @emoubarak/env-doctor
 ```
 
 ## Usage
