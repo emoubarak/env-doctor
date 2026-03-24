@@ -2,7 +2,6 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import { EnvSchema, loadSchema } from './schema';
 import * as validator from 'validator';
-import { v4 as uuidv4, v1 as uuidv1, v5 as uuidv5, NIL as nilUUID } from 'uuid';
 
 // Load environment variables from file
 export const loadEnvFile = (envPath: string): Record<string, string> => {

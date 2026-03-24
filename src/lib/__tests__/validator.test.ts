@@ -34,7 +34,7 @@ describe('Validator', () => {
   });
 
   it('should validate a correct regex pattern', async () => {
-    const result = validateValue('abc123', { format: 'regex', pattern: '^[a-z][0-9]+$' });
+    const result = validateValue('a123', { format: 'regex', pattern: '^[a-z][0-9]+$' });
     assert.strictEqual(result.isValid, true);
   });
 
