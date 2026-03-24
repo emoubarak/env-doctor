@@ -5,11 +5,12 @@ import yaml from 'js-yaml';
 export interface SchemaRule {
   required?: boolean;
   default?: string;
-  format?: 'string' | 'number' | 'url' | 'email' | 'boolean' | 'json';
+  format?: 'string' | 'number' | 'url' | 'email' | 'boolean' | 'json' | 'uuid' | 'regex' | 'date' | 'datetime' | 'port' | 'host' | 'semver' | 'hex' | 'base64';
   min?: number;
   max?: number;
   min_length?: number;
   max_length?: number;
+  pattern?: string; // Used for regex format
 }
 
 export interface EnvSchema {

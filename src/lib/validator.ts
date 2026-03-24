@@ -55,6 +55,85 @@ export const validateValue = (value: string, rule: NonNullable<EnvSchema[string]
           return { isValid: false, error: `Value "${value}" is not valid JSON` };
         }
         break;
+      case 'uuid':
+        // Valider UUID v1, v4, v5
+        if (!validator.isUUID(value, 'all')) {
+          return { isValid: false, error: `Value "${value}" is not a valid UUID` };
+        }
+        break;
+      case 'regex':
+        // Valider avec un pattern regex personnalisé
+        if (!rule.pattern) {
+          return { isValid: false, error: `Regex format requires a pattern property` };
+        }
+        try {
+          const regex = new RegExp(rule.pattern);
+          if (!regex.test(value)) {
+            return { isValid: false, error: `Value "${value}" does not match pattern ${rule.pattern}` };
+          }
+        } catch (e) {
+          return { isValid: false, error: `Invalid regex pattern: ${(e as Error).message}` };
+        }
+        break;
+      case 'date':
+        // Valider une date ISO 8601
+        const date = new Date(value);
+        if (isNaN(date.getTime()) || value !== date.toISOString().split('T')[0]) {
+          return { isValid: false, error: `Value "${value}" is not a valid ISO 8601 date` };
+        }
+        break;
+      case 'datetime':
+        // Valider une datetime ISO 8601
+        const datetime = new Date(value);
+        if (isNaN(datetime.getTime())) {
+          return { isValid: false, error: `Value "${value}" is not a valid ISO 8601 datetime` };
+        }
+        // Vérifier que c'est bien au format ISO
+        if (value !== datetime.toISOString()) {
+          // Essayez différents formats courants
+          const isoRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?(Z|[+-]\d{2}:\d{2})?$/;
+          if (!isoRegex.test(value)) {
+            return { isValid: false, error: `Value "${value}" is not a valid ISO 8601 datetime` };
+          }
+        }
+        break;
+      case 'port':
+        // Valider un port réseau (1-65535)
+        const portNum = parseInt(value, 10);
+        if (isNaN(portNum) || portNum < 1 || portNum > 65535) {
+          return { isValid: false, error: `Value "${value}" is not a valid port number (1-65535)` };
+        }
+        break;
+      case 'host':
+        // Valider hostname ou IP
+        if (!validator.isIP(value) && !validator.isFQDN(value)) {
+          // Vérifier aussi si c'est localhost ou un hostname simple
+          const hostnameRegex = /^[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?$/;
+          if (!hostnameRegex.test(value) && value !== 'localhost') {
+            return { isValid: false, error: `Value "${value}" is not a valid hostname or IP address` };
+          }
+        }
+        break;
+      case 'semver':
+        // Valider semantic versioning (ex: 1.0.0)
+        const semverRegex = /^(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$/;
+        if (!semverRegex.test(value)) {
+          return { isValid: false, error: `Value "${value}" is not a valid semantic version (e.g., 1.0.0)` };
+        }
+        break;
+      case 'hex':
+        // Valider couleur hexadécimale (#fff, #ffffff)
+        const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+        if (!hexRegex.test(value)) {
+          return { isValid: false, error: `Value "${value}" is not a valid hex color (e.g., #fff or #ffffff)` };
+        }
+        break;
+      case 'base64':
+        // Valider string base64
+        if (!validator.isBase64(value)) {
+          return { isValid: false, error: `Value "${value}" is not a valid base64 string` };
+        }
+        break;
       case 'string':
       default:
         // Additional string validations
